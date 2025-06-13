@@ -3,8 +3,7 @@
 Deskripsi singkat tentang proyekmu.
 
 ## 🚀 Fitur
-- Website
-	Port: 10080
+- Website → Port: `10080`
 - API
 	Port: 10081
 - Database
