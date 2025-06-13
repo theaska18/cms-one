@@ -1,15 +1,17 @@
-# Nama Proyek
+# CMS One
 
 Deskripsi singkat tentang proyekmu.
 
 ## 🚀 Fitur
-- Fitur 1
-- Fitur 2
-- Fitur 3
+- Website
+- API
+- File Management
+- Websocket
+- Queue
 
 ## 🛠️ Cara Instalasi
 
 ```bash
-git clone https://github.com/username/proyek.git
-cd proyek
-npm install
+git clone https://github.com/theaska18/cms-one.git
+cd cms-one
+docker compose up-d
