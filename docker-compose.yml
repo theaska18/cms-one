@@ -1,0 +1,60 @@
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: arroudnet_database
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234      # Password untuk root
+      MYSQL_USER: theaska                       # Username untuk user biasa
+      MYSQL_PASSWORD: 1234           # Password user baru (opsional)
+    command: --default-authentication-plugin=mysql_native_password
+    ports:
+      - "13306:3306"
+    volumes:
+      - database:/var/lib/mysql
+    restart: always
+    networks:
+      - arroudnet
+  php:
+    image: php:8.2-apache
+    container_name: arroudnet_web
+    ports:
+      - "10080:80"
+    volumes:
+      - ./web:/var/www/html
+    depends_on:
+      - mysql
+    restart: always
+    networks:
+      - arroudnet
+    command: sh -c "echo 'ServerName localhost' >> /etc/apache2/apache2.conf && apache2-foreground"
+  api:
+    image: php:8.2-apache
+    container_name: arroudnet_api
+    ports:
+      - "10081:80"
+    volumes:
+      - ./api:/var/www/html
+    depends_on:
+      - mysql
+    restart: always
+    networks:
+      - arroudnet
+    command: sh -c "echo 'ServerName localhost' >> /etc/apache2/apache2.conf && apache2-foreground"
+  websocket:
+    image: node:18
+    container_name: arroudnet_ws
+    working_dir: /app
+    volumes:
+      - ./websocket:/app
+    command: sh -c "npm install && node server.js"
+    ports:
+      - "13000:3000"
+    networks:
+      - arroudnet
+volumes:
+  database:
+  
+networks:
+  arroudnet:
+    driver: bridge
